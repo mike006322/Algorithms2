@@ -1,11 +1,13 @@
 """
 Traveling Salesman Problem
 Pseudocode in tsp_pseudocode.txt
-Version 2: use binary numbers to represent subsets instead of sets
+Version 2.1: used LRU(least recently used) cache decorator from functools to cache dist function.
+This made it slightly slower than version 2. Test 4 with 19 points was 1 second slower than version 2. Uncached was 8 seconds slower
 """
 
 from math import sqrt
 from numpy import inf
+from functools import lru_cache
 import time
 
 
@@ -45,15 +47,9 @@ def make_set_representation(input_set):
     return sum
 
 
+@lru_cache(maxsize=None)
 def dist(x, y):
     return sqrt((x[0] - y[0])**2 + (x[1] - y[1])**2)
-
-
-def create_distance_cache(points):
-    cache = dict()
-    for c in points:
-        cache[c] = dict([(d, dist(c, d)) for d in points])
-    return cache
 
 
 class ProgressChecker:
@@ -95,8 +91,6 @@ def traveling_salesman(points):
     # A[S][1] = {0 if S = {1}, inf otherwise}. Wait until the subsets are created to initialize them
     A[1] = {0: 0}
 
-    cached_distance = create_distance_cache(points)
-
     # Fill in the '2D array' by first iterating over the subsets by subset size and then iterate over the destinations, j, in each subset
     for m in range(2, n + 1):
         # create list of subsets of size m - 1 that don't have 1, called subsets_size_m to represent subsets of size m that have the first point, N[0] = 0
@@ -110,13 +104,13 @@ def traveling_salesman(points):
                     possible_mins = []
                     for k in subset_set:
                         if k != j:
-                            possible_mins.append(A[subset - 2**j][k] + cached_distance[points[k]][points[j]])
+                            possible_mins.append(A[subset - 2**j][k] + dist(points[k], points[j]))
                     A[subset][j] = min(possible_mins)
 
         progress.report(m)
     shortest_paths = A[int('1'*n, 2)]
     for destination in shortest_paths:
-        dist_to_start = cached_distance[points[0]][points[destination]]
+        dist_to_start = dist(points[0], points[destination])
         shortest_paths[destination] = shortest_paths[destination] + dist_to_start
     final_destination = min(shortest_paths, key=shortest_paths.get)
     shortest_path_length = shortest_paths[final_destination]
@@ -179,7 +173,7 @@ def main():
 
 if __name__ == '__main__':
     #main()
-    test1()
-    test2()
-    test3()
+    #test1()
+    #test2()
+    #test3()
     test4()
