@@ -1,8 +1,10 @@
-#Heap with added delete function
-#Creates and maintains a dictionary of indexes to facilitate O(1) time delete
-#For hashing to work the elements must be distinct
-## Cater this for Dijkstra's algorithm by handling inputs of (edge_lengeth, vertex) and having heapIndexDict track the index of the vertex
-## This involves putting '[1]' at the end of heapList entries while adding to and looking up from heapIndexDict
+"""
+Heap with added delete function
+Creates and maintains a dictionary of indexes to facilitate O(1) time delete
+For hashing to work the elements must be distinct
+-- Cater this for Dijkstra's algorithm by handling inputs of (edge_lengeth, vertex) and having heapIndexDict track the index of the vertex
+-- This involves putting '[1]' at the end of heapList entries while adding to and looking up from heapIndexDict
+"""
 
 class Heap():
     def __init__(self):

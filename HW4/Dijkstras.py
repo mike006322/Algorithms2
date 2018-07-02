@@ -2,8 +2,10 @@
 #See DijkstrasCustomHeap.py which uses a heap with O(logn) delete
 
 def Dijkstras(edges, n, s):
+    
     import heapq
     from numpy import inf
+    
     #input is (edges, num verticies, vertex taking shortest path from)
     #'edges' is a list of lists of form [tail, head, length]
     #n = number of verticies
@@ -24,8 +26,8 @@ def Dijkstras(edges, n, s):
     A = {s:0} # Computed shortest path distances
     V = set(range(1, n+1))
     min_heap = [] # stores nodes in form node = (key, label)
-    #for each vertex connected to s add '(distance, node)'
-    #for all other vertex add '(inf, node)'
+    # for each vertex connected to s add '(distance, node)'
+    # for all other vertex add '(inf, node)'
     for v in a[s]:
         min_heap.append((a[s][v], v))
     for v in V - X - set(a[s].keys()):
@@ -56,8 +58,8 @@ if __name__ == '__main__':
             head, length = i.split(',')
             tail = b[0]
             edges.append([int(tail), int(head), int(length)])
-    #'edges' is a list of lists of form [tail, head, length]
-    #graph is list of directed edges in form [tail, head, length]
+    # 'edges' is a list of lists of form [tail, head, length]
+    # graph is list of directed edges in form [tail, head, length]
     n = 200
     m = 1
     import time

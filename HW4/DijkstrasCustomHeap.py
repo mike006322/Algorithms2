@@ -1,18 +1,21 @@
 def Dijkstras(a, n, s):
+    """
+    Input is (a, num verticies, vertex taking shortest path from)
+    a is graph of the form {node1: {node2: distance, node3: distance, ... }, ...}
+    n = number of verticies
+    s = number of vertex to compute shortest paths from
+    Output of Dijkstras is a n-length list of shortest paths from vertex
+    """
     from HeapDelete import Heap
     from numpy import inf
-    #input is (a, num verticies, vertex taking shortest path from)
-    # a is graph of the form {node1: {node2: distance, node3: distance, ... }, ...}
-    #n = number of verticies
-    #s = number of vertex to compute shortest paths from
-    #output of Dijkstras is a n-length list of shortest paths from vertex
+
     
     X = {s} # Verticies passed so far
     A = {s:0} # Computed shortest path distances
     V = set(range(1, n+1))
     min_heap = Heap() # stores nodes in form node = (key, label)
-    #for each vertex connected to s add '(distance, node)'
-    #for all other vertex add '(inf, node)'
+    # for each vertex connected to s add '(distance, node)'
+    # for all other vertex add '(inf, node)'
     if s in a:
         min_heap.heapify([(inf, x) for x in V - X - set(a[s].keys())])
         for v in a[s]:

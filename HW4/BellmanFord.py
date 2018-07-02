@@ -1,13 +1,15 @@
 def BellmanFord(edges, n, s):
-    #input is (edges, num verticies, vertex taking shortest path from)
-    #'edges' is a list of lists of form [tail, head, length]
-    #n = number of verticies
-    #s = number of vertex to compute shortest paths from
-    #output of BellmanFord is list of distances from s
+    """
+    input is (edges, num verticies, vertex taking shortest path from)
+    'edges' is a list of lists of form [tail, head, length]
+    n = number of verticies
+    s = number of vertex to compute shortest paths from
+    output of BellmanFord is list of distances from s
+    """
     
     from numpy import inf
     
-    #first take edges and turn it into the graph of the following form:
+    # first take edges and turn it into the graph of the following form:
     a = {}
     for edge in edges:
         if edge[1] in a:
@@ -17,7 +19,7 @@ def BellmanFord(edges, n, s):
             a[edge[1]][edge[0]] = edge[2]
     # a is graph of the form {node1: {node2: distance, node3: distance, ... }, ...} WHERE node1 IS THE HEAD
     
-    #have current array, A, and a previous subproblem array, B
+    # have current array, A, and a previous subproblem array, B
     A = [inf]*(n+1)
     A[s] = 0
     B = A[:]
@@ -27,7 +29,7 @@ def BellmanFord(edges, n, s):
         for v in range(1, n+1):
             edges_to_v = {}
             if v in a:
-                edges_to_v = a[v] #dictionary of edges to v in form {node1: distance, node2, distance}
+                edges_to_v = a[v] # dictionary of edges to v in form {node1: distance, node2, distance}
             if edges_to_v == {}:
                 minCost = inf
             else:
@@ -45,8 +47,8 @@ if __name__ == '__main__':
             head, length = i.split(',')
             tail = b[0]
             edges.append([int(tail), int(head), int(length)])
-    #'edges' is a list of lists of form [tail, head, length]
-    #graph is list of directed edges in form [tail, head, length]
+    # 'edges' is a list of lists of form [tail, head, length]
+    # graph is list of directed edges in form [tail, head, length]
     n = 200
     m = 1
     import time
