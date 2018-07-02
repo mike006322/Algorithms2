@@ -1,0 +1,14 @@
+# Traveling Salesman Pseudocode
+# This pseudocode was gleaned from lectures as a part of Stanford's course, Algorithms: Design and Analysis Pt 2
+# Running time is O((n^2)(2^n))
+# Dynamic programming solution:
+# Subproblem:
+# For every destination j in {1,2,..., n}, every subset S of {1,2,...,n} that contains 1 and j, let L(s,j) = min len of a path from 1 to j that visits precisely the verticies of S (exactly once each)
+# A = 2D array indexed by subsets S that contain 1 and destinations j in {1,2,...,n}
+# Base case:
+# A[S,1] = {0 if S = {1}, inf otherwise}
+# loop:
+# for m = 2,3,4...n:
+#   for set S in {1,2,...,n} of size m that has 1:
+#       for j in S, j != 1:
+#           A[S, j] = min { for all k in S, k != j, A[S-{j}, k] + dist(k,j) }
