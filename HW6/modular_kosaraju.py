@@ -16,17 +16,6 @@ def reorder_graph(G, ordering):
         orderedGraph[ordering[i]] = [ordering[j] for j in G[i]]
     return orderedGraph
 
-def reverse_ordering(reorderedg, ordering):
-    """
-    undoes the naming applied by 'reorder_graph'
-    """
-    reverse_ordering = {v: k for k, v in ordering.items()}
-    graph = dict()
-    for i in reorderedg:
-        graph[reverse_ordering[i]] = [reverse_ordering[j] for j in reorderedg[i]]
-    return graph
-
-
 def kosaraju(g, n):
     ordering = collections.defaultdict(int)
 
