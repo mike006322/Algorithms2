@@ -1,0 +1,48 @@
+Solution to two sat by analyzing strongly connected components:
+A statement "a or b" gives two implications:
+"not a implies b" and "not b implies a"
+We consider a directed graph with nodes being statements and their negations, like a, b, -a,-b
+and edges being implications, like (-a, b) and (-b, a)
+Then we compute strongly connected components of the graph
+If a strongly connected component of a graph has a variable and its negation,
+then it's impossible to satisfy the two sat conditions
+
+Pseudocode:
+1. make graph
+2. get SCCs with kosaraju's algorithm
+3. iterate through SCCs looking for member negations
+
+
+
+Randomized Local Search Algorithm to solve the 2 sat program (too slow):
+
+local search space:
+    - assigments of all the conditions
+    - neighboring if only one value is different
+
+1. get conditions, each condition represents an "or" clause
+2. in "2satx.txt" are n number of conditions that are either True or False (same as number of variables)
+3. Randomly select a pattern of True's and False's
+4. Then search "locally" from there selecting single values to change
+
+Papadimitriou's Algorithm:
+repeat log(base2)n times:
+- choose random initial assignment
+(flip variables trying to improve quality of the assignment)
+- repeat 2n^2 times:
+(n = number of variables)
+    - if current assignment satisfies all clauses, return current assignment
+    - else, pick an unsatisfied clause and flip the variable
+return 'no satisfying values' if the algorithm runs its course without finding any
+
+functions to define:
+    create initial random assignment
+    check assignment
+    change a variable that doesn't work at random
+
+
+Speedup Idea:
+Instead of list of list of True's and False's, the assignment is represented by an integer of size 2^n
+assignment's binary representation indicates if a variable is true or false
+each variable is thought of as 2^n where n is its variable number
+"assignment & 2**i" returns 0 if variable is False and 2**i if True
